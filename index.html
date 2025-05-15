@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de seguro patrimonio</title>
+    <style>
+        body, html {
+           margin: 0;
+           padding: 0;
+           height: 100vh;
+           font-family: sans-serif;
+        }
+
+        .fondo {
+           background: linear-gradient(to bottom, #007dc3, #c974c9);
+           height: 70vh;
+           position: relative;
+        }
+
+        .curva-blanca {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background: white;
+            border-top-left-radius: 50% 100%;
+            border-top-right-radius: 50% 100%;
+            z-index: 1;
+        }
+
+        .contenido {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 2;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            color: #f5f5f5;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #18bb20;
+        }   
+
+        .error {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="fondo">
+        <div class="contenido">
+        <div class="curva-blanca"></div>
+      </div>
+
+    <div class="main-container">
+        <div class="header">
+            <img src="https://www.pacifico.com.pe/documents/28730/89689031/prod-vida.svg/40ca1310-919b-b079-b47b-52f5ef20d889?t=1687212130564" width="50px">
+            <h2>Seguro Patrimonio</h2>
+            <p>Ingresa tus datos y nos contactaremos contigo para coordinar la compra de tu<br> seguro patrimonio</p>
+        </div>
+
+        <div class="container">    
+            <form id="registroForm" onsubmit="return validarFormulario()">
+                <div class="input-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" placeholder="Nombre">
+                </div>
+                <div class="input-group">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" placeholder="Apellido">
+                </div>
+                <div class="input-group">
+                    <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                    <input type="date" id="fechaNacimiento">
+                </div>
+                <div class="input-group">
+                    <label for="sexo">Sexo:</label>
+                    <select id="sexo">
+                        <option value="">Seleccione</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="femenino">Femenino</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="estadoCivil">Estado Civil:</label>
+                    <select id="estadoCivil">
+                        <option value="">Seleccione</option>
+                        <option value="soltero">Soltero</option>
+                        <option value="casado">Casado</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" placeholder="Teléfono (9 dígitos)"maxlength="9" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                </div>
+                <div class="input-group">
+                    <label for="correo">Correo:</label>
+                    <input type="text" id="correo" placeholder="Correo electrónico">
+                </div>
+                <div class="input-group">
+                    <label for="tipoDocumento">Tipo de Documento:</label>
+                    <select id="tipoDocumento">
+                        <option value="">Seleccione</option>
+                        <option value="dni">DNI</option>
+                        <option value="pasaporte">RUC</option>
+                    </select>
+                </div>
+                <button type="submit">Enviar</button>
+            </form>
+            <p id="mensajeError" class="error"></p>
+        </div>
+    </div>
+
+    <script>
+        function validarFormulario() {
+            document.getElementById("mensajeError").textContent = "";
+
+            var nombre = document.getElementById("nombre").value;
+            var apellido = document.getElementById("apellido").value;
+            var fechaNacimiento = document.getElementById("fechaNacimiento").value;
+            var sexo = document.getElementById("sexo").value;
+            var estadoCivil = document.getElementById("estadoCivil").value;
+            var telefono = document.getElementById("telefono").value;
+            var correo = document.getElementById("correo").value;
+            var tipoDocumento = document.getElementById("tipoDocumento").value;
+
+            if (!nombre || !apellido || !fechaNacimiento || !sexo || !estadoCivil || !telefono || !correo || !tipoDocumento) {
+                document.getElementById("mensajeError").textContent = "Uno o más campos tienen un error. Por favor revisa e inténtalo de nuevo.";
+                return false;
+            }
+
+            var regexCorreo = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (!regexCorreo.test(correo)) {
+                document.getElementById("mensajeError").textContent = "Por favor, ingresa un correo electrónico válido.";
+                return false;
+            }
+
+            if (telefono.length !== 9 || isNaN(telefono)) {
+                document.getElementById("mensajeError").textContent = "El teléfono debe tener exactamente 9 dígitos numéricos.";
+                return false;
+            }
+
+            alert("¡Datos enviados correctamente!");
+            return true;
+        }
+    </script>
+</body>
+</html>
